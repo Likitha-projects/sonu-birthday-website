@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface OpeningProps {
@@ -10,19 +10,27 @@ interface OpeningProps {
 export default function Opening({ onNext }: OpeningProps) {
   const [blownOut, setBlownOut] = useState(false);
   const [showText, setShowText] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   const handleTap = () => {
     if (!blownOut) {
       setBlownOut(true);
       // Wait a moment before showing the text
       setTimeout(() => setShowText(true), 800);
-      
-      // Auto-advance to next step after reading the text
-      setTimeout(() => {
-        onNext();
-      }, 4000);
+      setCountdown(3);
     }
   };
+
+  useEffect(() => {
+    if (countdown === null || !showText) return;
+
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 800); // slightly faster than 1s
+      return () => clearTimeout(timer);
+    } else {
+      onNext();
+    }
+  }, [countdown, showText, onNext]);
 
   return (
     <div 
@@ -92,11 +100,35 @@ export default function Opening({ onNext }: OpeningProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 1 }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
           >
-            <h1 className="font-script text-5xl md:text-6xl text-gold-400 text-center drop-shadow-lg px-4">
+            <h1 className="font-script text-5xl md:text-6xl text-gold-400 text-center drop-shadow-lg px-4 mb-8">
               Happy Birthday, My Love
             </h1>
+            
+            {countdown !== null && countdown > 0 && (
+              <motion.div 
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="relative flex items-center justify-center w-20 h-20"
+              >
+                <svg viewBox="0 0 24 24" className="absolute inset-0 w-full h-full text-rose-500 fill-current drop-shadow-lg animate-pulse">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <AnimatePresence mode="popLayout">
+                  <motion.span 
+                    key={countdown}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.5 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative z-10 font-sans font-bold text-3xl text-white"
+                  >
+                    {countdown}
+                  </motion.span>
+                </AnimatePresence>
+              </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

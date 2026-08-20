@@ -52,11 +52,10 @@ export default function Opening({ onNext }: OpeningProps) {
                         opacity: 1,
                         y: [0, -2, 2, 0]
                       }}
-                      exit={{ scale: 0, opacity: 0, y: -20 }}
+                      exit={{ scale: 0, opacity: 0, y: -20, transition: { duration: 0.5 } }}
                       transition={{ 
                         duration: 1.5, 
-                        repeat: Infinity,
-                        exit: { duration: 0.5, repeat: 0 }
+                        repeat: Infinity
                       }}
                       className="absolute -top-10 left-1/2 -translate-x-1/2 w-6 h-10 bg-gold-400 rounded-full blur-[2px]"
                       style={{

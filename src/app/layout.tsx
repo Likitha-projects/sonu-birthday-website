@@ -14,13 +14,29 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Happy 21st Birthday, Chinna ❤️",
-  description: "A little surprise for you...",
+  title: "To My Dearest Chinna ❤️",
+  description: "A very special surprise for the most beautiful person. Happy 21st Birthday, Sonu! ✨",
   openGraph: {
-    title: "Happy 21st Birthday, Chinna ❤️",
-    description: "A little surprise for you...",
+    title: "To My Dearest Chinna ❤️",
+    description: "A very special surprise for the most beautiful person. Happy 21st Birthday, Sonu! ✨",
+    url: "https://sonu-birthday-website-nine.vercel.app/",
+    siteName: "Sonu's 21st Birthday",
+    images: [
+      {
+        url: "https://sonu-birthday-website-nine.vercel.app/images/meta-image/chinna-birthday-collage.png",
+        width: 1200,
+        height: 630,
+        alt: "Happy 21st Birthday Chinna",
+      }
+    ],
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "To My Dearest Chinna ❤️",
+    description: "A very special surprise for the most beautiful person. Happy 21st Birthday, Sonu! ✨",
+    images: ["https://sonu-birthday-website-nine.vercel.app/images/meta-image/chinna-birthday-collage.png"],
+  }
 };
 
 export default function RootLayout({
